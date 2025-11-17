@@ -48,6 +48,34 @@ let optional: { name: string; age?: number } = { name: "John" };
 let indexed: { [key: string]: any } = { prop1: "value1" };
 ```
 
+### Optional Chaining and Nullish Coalescing
+
+Optional Chaining (`?.`) allows you to safely access properties of an object that may be `null` or `undefined`. The Nullish Coalescing Operator (`??`) provides a default value for `null` or `undefined` values.
+
+```typescript
+interface UserProfile {
+  id: number;
+  settings?: {
+    theme: string;
+    notifications?: {
+      email: boolean;
+    };
+  };
+}
+
+const user1: UserProfile = { id: 1, settings: { theme: 'dark' } };
+const user2: UserProfile = { id: 2 };
+
+// Optional Chaining (?.)
+const theme = user1.settings?.theme; // "dark"
+const email = user1.settings?.notifications?.email; // undefined (no error)
+const noSettingsTheme = user2.settings?.theme; // undefined (no error)
+
+// Nullish Coalescing (??)
+const user2Theme = user2.settings?.theme ?? 'light'; // "light"
+const user1Email = user1.settings?.notifications?.email ?? false; // false
+```
+
 ### Union and Intersection Types
 ```typescript
 type StringOrNumber = string | number;
